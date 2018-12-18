@@ -1,0 +1,43 @@
+
+<div class="row custm-view custm-bg-medium">
+  <div class="row custm-toolbar custum-bg-light shadow-sm">
+
+    <nav aria-label="breadcrumb" class="navbar navbar-expand-lg" style="width:100%; height: 2rem;">
+      <div class="collapse navbar-collapse">
+        <ol class="breadcrumb navbar-nav" >
+        </ol>
+        <!-- COMMAND -->
+        <!-- <div class="custm-command" style="width:100%">
+          <button class="custm-btn-circle-span shadow-sm rounded" (click)="getSuspended()"><i class="material-icons custm-ft-neutral custm-btn-icon">launch</i><span style="margin-left:0.5rem;">Suspended</span></button>
+        </div> -->
+        <!-- END COMMAND -->
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- CONTENT -->
+  <div class="custm-bg-medium" style="width:101%; overflow-y:scroll; height:100%; top:6rem; bottom:0; padding-bottom:5rem;position:absolute; z-index:-1;">
+    <div class="container custm-content">
+      <!-- LIST -->
+      <div class="row custm-doc-row-note custm-bg-neutral shadow-sm"  style="margin:1rem 10rem;" *ngIf="isEmpty(selectedIndex)">
+
+        <div class="custm-doc-collection" style="width: 100%">
+          <div>
+            <a class="btn"  (click)="updateList()" style="width: 100%"><button type="button btn-block" class="btn btn-outline-secondary" style="width: inherit">Update list</button></a>
+          </div>
+          <div *ngFor="let item of list">
+            <a class="btn"  (click)="call(item.index)"><ModelIcon [model]="item.index.model"></ModelIcon>{{item.title.value}}</a>
+          </div>
+        </div>
+      </div>
+      <!-- CARD -->
+      <div *ngIf="!isEmpty(selectedIndex)">
+        <app-recall-card [idx]="selectedIndex"(changeIndex)="changeIndex()"></app-recall-card>
+      </div>
+
+    </div>
+  </div>
+  <!-- END CONTENT -->
+
+</div>

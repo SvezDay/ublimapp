@@ -1,0 +1,36 @@
+<!-- <ng4-loading-spinner> </ng4-loading-spinner> -->
+<div class="container-fluid">
+  <div class="row custm-activity">
+    <div class="col-lg-6 col-md-12 custm-activity-side" style="background-color:blue;">
+        <h5>Todo Side</h5>
+    </div>
+    <div class="col-lg-6 offset-lg-6 col-md-12 custm-activity-side">
+        <h5>Project Side</h5>
+        <div class="row custm-toolbar custm-bg-light">
+          <nav aria-label="breadcrumb" class="navbar navbar-expand-lg" style="padding: 0 2rem; width:100%; height:2rem;">
+            <div class="collapse navbar-collapse">
+              <ol class="breadcrumb navbar-nav" >
+                <!-- <li class="breadcrumb-item nav-item"  *ngFor="let item of path; first as isFirst; last as isLast;">
+                <span *ngIf="isLast && !isFirst && isEmptyObject(selectedTitle)" [class.custm-ft-flash]="true" (click)="selectTitle(item)">{{item.index.model | slice:0:4 | uppercase}} | {{item.title.value}}</span>
+                <span *ngIf="!isLast && !isFirst" [class.custm-ft-flash]="false" (click)="onPathClick(item)">{{item.title.value}}</span>
+                <span *ngIf="!isLast && isFirst" [class.custm-ft-flash]="false" (click)="onPathClick(item)">{{item.title.value}}</span>
+                <span *ngIf="isLast && isFirst" [class.custm-ft-flash]="false">{{item.title.value}}</span>
+              </li> -->
+            </ol>
+            <!-- <div class="" *ngIf="!isEmptyObject(selectedTitle)">
+            <input type="text" id="selectedTitle" class="custm-textarea" [(ngModel)]="selectedTitle.value"  (blur)="updateTitle()" style="padding-left:0;">
+          </div> -->
+        </div>
+      </nav>
+    </div>
+
+    <!-- <div class="custm-bg-medium" style="width:101%; overflow-y:scroll; height:100%; top:6rem; bottom:0; padding-bottom:5rem;position:absolute; z-index:-1;">
+    <div class="container custm-content">
+    <app-activity-root *ngIf="documentLastOfPath.index?.model=='table'" [hg]=documentLastOfPath (addHg)="addPath($event)" (delHg)="deletePath($event)" (move)="initTree($event)"></app-table>
+  </div>
+  </div> -->
+
+    </div>
+  </div>
+
+</div>

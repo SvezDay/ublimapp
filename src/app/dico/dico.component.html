@@ -1,0 +1,95 @@
+<!-- <ng4-loading-spinner> </ng4-loading-spinner> -->
+
+  <!-- CONTENT -->
+  <div [contextMenu]="extendHeadGraphMenu" [contextMenuSubject]="null" class="custm-document-nest-container">
+    <div *ngIf="!ehg.title?.descendant?.length && !ehg.item?.length" class="" style="text-align:center;">
+      <h5>Empty document</h5>
+    </div>
+    <!-- <div class="custm-doc-collection">
+      <ul class="">
+        <li *ngFor="let item of doc.title?.descendant">
+          <a class="btn"  (click)="onDocument(item)"><ModelIcon [model]="item.index.model"></ModelIcon> {{item.title?.value}}</a>
+        </li>
+      </ul>
+    </div> -->
+
+    <!-- TEXT CONTENT -->
+    <div class="row custm-doc-row-note custm-bg-neutral shadow-sm" *ngIf="!!ehg.item?.length">
+      <ul class="">
+        <li *ngFor="let item of ehg.item; let i = index;">
+
+          <div class=" row custm-doc-note justify-content-between"  *ngIf="!ecg.length || ecg[0]?.traduction.uuid!=item.traduction.uuid" (click)="getExtendColumnGraph(item)">
+            <div class="">
+              <span style="font-size:1.3rem; font-weight:bold; margin: 0 2rem;">{{item.traduction.value}}</span>
+            </div>
+          </div>
+
+          <div *ngIf="!!ecg.length && ecg[0]?.traduction.uuid == item.traduction.uuid" style="background-color:silver;">
+            <div class="custm-ft-flash" style="width:100%; text-align:right; padding-right:1rem; background-color:black;">
+              <a style="cursor:pointer;"(click)="unselectExtendColumnGraph()">Close</a>
+            </div>
+            <div *ngFor="let itemz of ecg; let index = index;" >
+
+              <div class=" row custm-doc-note justify-content-between"  *ngIf="rg.traduction?.uuid!=itemz.traduction.uuid" (click)="selectRowGraph(itemz, index)">
+                <div class="">
+                  <span><Label [code_label]="itemz.traduction.code_label"></Label></span>
+                  <span style="font-size:1.3rem; font-weight:bold; margin: 0 2rem;">{{itemz.traduction.value}}</span>
+                </div>
+              </div>
+
+              <div *ngIf="rg.traduction?.uuid==itemz.traduction.uuid" >
+                <div class="custm-doc-note">
+
+                  <div class="row justify-content-between" style="padding: 0.5rem 1rem;">
+                    <button class="btn" type="button" name="button" (click)="selectLanguage($event, rg.traduction)"><Label [code_label]="rg.traduction.code_label"></Label></button>
+                    <button class="btn btn-danger" type="button" name="button" (click)="deleteRow()">Delete</button>
+                  </div>
+                  <div class="custm-div-textarea">
+                    <input type="text" class="custm-textarea custm-bg-medium" style="background-color:#f8f9fa;" [(ngModel)]="rg.traduction.value" aria-describedby="basic-addon1" (blur)="updateWordValue()">
+                  </div>
+                  <div class="custm-div-textarea" *ngIf="!!rg.definition?.uuid">
+                    <textarea type="textarea" class="custm-textarea custm-textarea-large custm-bg-medium" style="background-color:#f8f9fa;" [(ngModel)]="rg.definition.value" aria-describedby="basic-addon1" (blur)="updateDefinitionValue()"></textarea>
+                  </div>
+                  <div class="row justify-content-between" style="padding: 0.5rem 1rem;" *ngIf="!rg.definition?.uuid">
+                    <button class="btn" type="button" name="button" (click)="addDefinition()">Add definition</button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <context-menu #languageMenu [useBootstrap4]="true">
+      <div class="list-group" *ngFor="let item of traductions">
+        <ng-template class="list-group-item" contextMenuItem (execute)="updateWordLanguage(item)">{{item.designation}}</ng-template>
+      </div>
+    </context-menu>
+
+    <context-menu #extendHeadGraphMenu [useBootstrap4]="true">
+      <ng-template contextMenuItem [enabled]="true" (execute)="addItem()"><span>New item</span></ng-template>
+      <ng-template contextMenuItem [enabled]="true" *ngIf="!!ecg.length && rg.isEmpty()" [subMenu]="addNoteMenu"><span>Add traduction</span></ng-template>
+      <context-menu #addNoteMenu>
+        <div class="list-group">
+          <div class="list-group" *ngFor="let item of traductions">
+            <ng-template class="list-group-item" contextMenuItem (execute)="addTraduction(item.code_label)">{{item.designation}}</ng-template>
+          </div>
+        </div>
+        <div class="list-group" *ngIf="!isEmptyObject(rg) && isEmptyObject(rg.definition)">
+          <ng-template class="list-group-item" contextMenuItem (execute)="addDefinition()">Defintion</ng-template>
+        </div>
+      </context-menu>
+      <ng-template contextMenuItem (execute)="move.emit({event:$event, idx_uuid:ehg.index.uuid})"><span [class.custm-disabled]="false">Select document to move</span></ng-template>
+      <ng-template contextMenuItem [enabled]="true" (execute)="deleteDocument()"><span>Delete dico</span></ng-template>
+      <ng-template contextMenuItem (execute)="togglerecallableStatus('true', false)" *ngIf="ehg.title.recallable=='false'"><span [class.custm-disabled]="!(!selectedToMove )">Add in games</span></ng-template>
+      <!-- <ng-template contextMenuItem (execute)="togglerecallableStatus(true, true)" *ngIf="!!ehg.index?.uuid && !ehg.title.recallable"><span [class.custm-disabled]="!(!selectedToMove )">Add in games with dependancies</span></ng-template> -->
+      <ng-template contextMenuItem (execute)="togglerecallableStatus('false', false)" *ngIf="ehg.title.recallable=='true'"><span [class.custm-disabled]="!(!selectedToMove )">Remove from games</span></ng-template>
+      <!-- <ng-template contextMenuItem (execute)="togglerecallableStatus(false, true)" *ngIf="!!ehg.index?.uuid && ehg.title.recallable"><span [class.custm-disabled]="!(!selectedToMove )">Remove from games with dependancies</span></ng-template> -->
+    </context-menu>
+  </div>
+
+  <!-- END CONTENT -->

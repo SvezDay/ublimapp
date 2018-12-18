@@ -1,0 +1,28 @@
+<div class="container custm-game-content">
+  <div *ngIf="!isEmpty(card)">
+
+    <div class="row custm-card custm-bg-neutral shadow-sm">
+      <p class="custm-card-label custm-ft-sz-big custm-bg-light"><Label [code_label]="card.q.code_label"></Label></p>
+      <hr>
+      <p class="custm-card-value custm-ft-sz-med">{{card.q.value}}</p>
+    </div>
+    <div class="row custm-card custm-bg-neutral shadow" style="margin-top:3rem;" (click)="next()">
+      <p class="custm-card-label custm-ft-sz-big custm-bg-light"><Label [code_label]="card.a?.code_label"></Label></p>
+      <hr *ngIf="getAnswer">
+      <p class="custm-card-value custm-ft-sz-med" *ngIf="getAnswer">{{card.a.value}}</p>
+    </div>
+    <div class="row justify-content-around" style="margin-top: 1rem;" *ngIf="getAnswer">
+      <button type="button" class="btn btn-danger" style="width: 18rem; height:4rem;" (click)="scoring('lose')">Lose</button>
+      <button type="button" class="btn btn-secondary" style="width: 6rem; height:3rem; margin-top:0.5rem;" (click)="recallStatus(false)">Suspend</button>
+      <button type="button" class="btn btn-success" style="width: 18rem; height:4rem;" (click)="scoring('win')">Win</button>
+    </div>
+
+  </div>
+  <div *ngIf="isEmpty(card)">
+
+    <div class="row custm-card custm-bg-neutral shadow-sm">
+      <p class="custm-card-label custm-ft-sz-big custm-bg-flash">Not Enough card to play ! </p>
+    </div>
+
+  </div>
+</div>

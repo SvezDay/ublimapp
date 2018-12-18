@@ -1,0 +1,62 @@
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import '~bootstrap/scss/mixins/_breakpoints';
+/* .custm-ft-flash { color: blue !important; } */
+.custm-ft-flash { color: orange !important; }
+.custm-ft-neutral { color: white; }
+.custm-ft-light { color: gainsboro; }
+.custm-ft-medium { color: #696969; }
+.custm-ft-dark { color: #101010; }
+
+.custm-ft-sz-sm { font-size: 1rem; }
+.custm-ft-sz-med { font-size: 1.3rem; }
+.custm-ft-sz-big { font-size: 1.7rem; }
+
+.custm-bg-light { background-color: #f8f9fa; }
+.custm-bg-medium { background-color: gainsboro; }
+.custm-bg-dark { background-color: silver; }
+.custm-bg-neutral { background-color: white; }
+.custm-bg-flash { background-color: orange; }
+
+.custm-disabled { color:gainsboro; pointer-events: nones; }
+
+.custm-command-left { text-align: right; right: 1%; position: absolute; }
+
+.custm-document-nest-container {min-height: 100%; }
+.custm-view { box-shadow: 0 0 10px 0 silver; }
+.custm-toolbar { width: 102%; border-bottom: 0.5px solid silver; cursor: pointer;  margin-bottom: 0rem  }
+.custm-toolbar div { width: 20rem; }
+.custm-toolbar nav ol { background-color: inherit; margin: 0 0 0 7px; width: auto; padding-right: O;}
+
+.custm-btn-circle { background-color: silver; border-radius: 50%; border: none; padding: 8px;  margin: 5px; cursor:pointer; }
+.custm-btn-circle-span { background-color: silver; border-radius: 50%; border: none; padding: 8px;  margin: 5px; cursor:pointer; display: inline-flex;}
+.custm-btn-icon { display: block; }
+
+.ngx-contextmenu .dropdown-menu {
+  border: solid 1px chartreuse;
+  background-color: darkgreen;
+  padding: 0;
+}
+.ngx-contextmenu li {
+  display: block;
+  border-top: solid 1px chartreuse;
+  text-transform: uppercase;
+  text-align: center;
+}
+.ngx-contextmenu li:first-child {
+  border-top:none;
+}
+.ngx-contextmenu a {
+  color:chartreuse;
+  display: block;
+  padding: 0.5em 1em;
+}
+.ngx-contextmenu a:hover {
+  color:darkgreen;
+  background-color:chartreuse;
+}
+
+.custm-game-content { width: 45rem; min-height: 60rem; background-color: inherit; padding:0; margin-top: 4rem; }
+.custm-card { border-radius: 2px;}
+.custm-card-label { width: 100%; text-align: center; margin: 0; padding: 0.5rem; }
+.custm-card-value { width: 100%; margin: 0; padding: 1rem;}

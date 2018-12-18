@@ -1,0 +1,101 @@
+<div class="row custm-view custm-bg-medium">
+  <div class="row custm-toolbar custm-bg-light">
+
+    <nav aria-label="breadcrumb" class="navbar navbar-expand-lg" style="padding: 0 2rem; width:100%; height:2rem;">
+
+      <div class="collapse navbar-collapse">
+        <ol class="breadcrumb navbar-nav" >
+          <li class="breadcrumb-item nav-item"  *ngFor="let item of path; first as isFirst; last as isLast;">
+            <span *ngIf="isLast && !isFirst && isEmptyObject(selectedTitle)" [class.custm-ft-flash]="true" (click)="selectTitle(item)">{{item.index.model | slice:0:4 | uppercase}} | {{item.title.value}}</span>
+            <span *ngIf="!isLast && !isFirst" [class.custm-ft-flash]="false" (click)="onPathClick(item)">{{item.title.value}}</span>
+            <span *ngIf="!isLast && isFirst" [class.custm-ft-flash]="false" (click)="onPathClick(item)">{{item.title.value}}</span>
+            <span *ngIf="isLast && isFirst" [class.custm-ft-flash]="false">{{item.title.value}}</span>
+          </li>
+        </ol>
+        <div class="" *ngIf="!isEmptyObject(selectedTitle)">
+          <input type="text" id="selectedTitle" class="custm-textarea" [(ngModel)]="selectedTitle.value"  (blur)="updateTitle()" style="padding-left:0;">
+        </div>
+      </div>
+
+    </nav>
+  </div>
+
+
+  <!-- ROOT -->
+  <!-- <div class="custm-bg-medium" style="width:101%; overflow-y:scroll; max-height:48rem; margin-top:2rem; position:absolute; z-index:-1;"> -->
+  <div class="custm-bg-medium" style="width:101%; overflow-y:scroll; height:100%; top:6rem; bottom:0; padding-bottom:5rem;position:absolute; z-index:-1;">
+    <div class="container custm-content">
+
+        <app-doc-root *ngIf="documentLastOfPath.index?.model==''" [hg]=documentLastOfPath (addHg)="addPath($event)"></app-doc-root>
+        <app-free *ngIf="documentLastOfPath.index?.model=='blank'" [hg]=documentLastOfPath (addHg)="addPath($event)" (delHg)="deletePath($event)" (move)="initTree($event)"></app-free>
+        <app-dico *ngIf="documentLastOfPath.index?.model=='dico'" [hg]=documentLastOfPath (addHg)="addPath($event)" (delHg)="deletePath($event)" (move)="initTree($event)"></app-dico>
+        <app-book *ngIf="documentLastOfPath.index?.model=='book' || documentLastOfPath.index?.model=='section-book'" [hg]=documentLastOfPath (addHg)="addPath($event)" (delHg)="deletePath($event)" (move)="initTree($event)"></app-book>
+        <app-table *ngIf="documentLastOfPath.index?.model=='table'" [hg]=documentLastOfPath (addHg)="addPath($event)" (delHg)="deletePath($event)" (move)="initTree($event)"></app-table>
+    </div>
+  </div>
+  <!-- END ROOT -->
+
+</div>
+
+<!-- MODAL BUTTON --><!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#titleModal">Launch demo modal</button> -->
+<!-- MODAL -->
+<div #treeModal class="modal fade" id="titleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" name="modlab">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Titles View</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Ancestor -->
+        <div class="">
+          <span tabulation (click)="showTree(tree.ancestor.index.uuid)">{{tree.ancestor?.title?.value}}</span>
+        </div>
+        <!-- HeadGraph -->
+        <div class="" style="background-color:gainsboro">
+          <span tabulation [index_list]=1>{{tree.headGraph?.title?.value}}</span>
+        </div>
+        <!-- Title Descendant -->
+        <div class="" *ngFor="let item of tree.titleDescendant; let i = index;">
+          <span tabulation [index_list]=2 (click)="showTree(item.index.uuid)">{{item.title.value}}</span>
+        </div>
+        <!-- Note Descendant -->
+        <div class="" *ngFor="let item of tree.noteDescendant; let i = index;">
+            <span tabulation [index_list]=3 (click)="onTree(item.index.uuid)">{{item.title.value}}</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary" (click)="moveIn(true)">With descendant</button>
+        <!-- <button type="button" class="btn btn-primary" (click)="moveIn(false)">Without descendant</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL -->
+
+
+  <!-- TITLE
+  <div class="row custm-doc-title custm-bg-neutral shadow-sm justify-content-between" [ngClass]="!isEmptyObject(selectedTitle) ? 'shadow rounded mb-3 mt-3' : '' " (click)="selectTitle()">
+    <div>
+      <span class="custm-ft-sz-sm custm-ft-neutral custm-bg-medium custm-doc-title-model">{{doc.index.model | slice:0:3 | uppercase}}</span>
+      <span *ngIf="isEmptyObject(selectedTitle)">{{doc.title.value}}</span>
+    </div>
+    <div>
+      <span class="custm-ft-sz-sm custm-ft-neutral custm-bg-medium custm-doc-title-model" *ngIf="isEmptyObject(selectedTitle) && doc.title?.course && !!doc.index?.uuid">L</span>
+      <span class="custm-ft-sz-sm custm-ft-neutral custm-bg-medium custm-doc-title-model" *ngIf="isEmptyObject(selectedTitle) && !doc.title?.course && !!doc.index?.uuid">X</span>
+    </div>
+    <div *ngIf="!isEmptyObject(selectedTitle)" class="custm-doc-title-writable">
+      <input type="text" id="selectedTitle" class="custm-textarea" [(ngModel)]="selectedTitle.value" aria-describedby="basic-addon1" (blur)="updateTitle()">
+    </div>
+  </div>
+  <div class="custm-doc-collection" *ngIf="doc.title.descendant && !!doc.title.descendant.length">
+    <ul class="">
+      <li *ngFor="let item of doc.title?.descendant">
+        <a class="btn"  (click)="onDocument(item, $event)"><ModelIcon [model]="item.index.model"></ModelIcon> {{item.title?.value}}</a>
+      </li>
+    </ul>
+  </div>
+  TITLE END-->

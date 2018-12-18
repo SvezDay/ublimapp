@@ -1,0 +1,24 @@
+<div (contextMenu)="basicMenu"  class="custm-document-nest-container">
+  <div *ngIf="!list.length" class="" style="text-align:center;">
+    <h5>Empty document</h5>
+  </div>
+
+  <div class="custm-doc-collection">
+    <div *ngFor="let item of list">
+      <a class="btn"  (click)="onDocument(item)"><ModelIcon [model]="item.index.model"></ModelIcon>{{item.title?.value}}</a>
+    </div>
+  </div>
+
+  <context-menu #basicMenu [useBootstrap4]="true">
+    <!-- <ng-template contextMenuItem (execute)="showTree()"><span>tree view</span></ng-template> -->
+    <ng-template contextMenuItem [subMenu]="modelMenu"><span>Add Model</span></ng-template>
+    <context-menu #modelMenu>
+      <ng-template contextMenuItem (execute)="addDocument('blank')"><span [class.custm-disabled]="!(!selectedToMove)">Blank</span></ng-template>
+      <ng-template contextMenuItem (execute)="addDocument('dico')"><span [class.custm-disabled]="!(!selectedToMove)">Dico</span></ng-template>
+      <ng-template contextMenuItem (execute)="addDocument('book')"><span [class.custm-disabled]="!(!selectedToMove)">Book</span></ng-template>
+      <ng-template contextMenuItem (execute)="addDocument('table')"><span [class.custm-disabled]="!(!selectedToMove)">Table</span></ng-template>
+    </context-menu>
+    <!-- MUST BE ASK IN THE MODAL CONFIRMATION <ng-template contextMenuItem (execute)="deleteGraphAndChildren()" [enabled]="!selectedToMove"><span [class.custm-disabled]="!(!selectedToMove)">delete doc and children</span></ng-template> -->
+  </context-menu>
+
+</div>

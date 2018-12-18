@@ -1,0 +1,81 @@
+<!-- <ng4-loading-spinner> </ng4-loading-spinner> -->
+  <!-- CONTENT -->
+  <div [contextMenu]="basicMenu" [contextMenuSubject]="null" class="custm-document-nest-container" >
+    <div class="">
+
+      <div *ngIf="!doc.title?.descendant.length && !doc.notes?.length" class="" style="text-align:center;">
+        <h5>Empty document</h5>
+      </div>
+
+
+      <div class="custm-doc-collection">
+        <ul class="">
+          <li *ngFor="let item of doc.title?.descendant">
+            <a class="btn"  (click)="onDocument(item)"><ModelIcon [model]="item.index.model"></ModelIcon> {{item.title?.value}}</a>
+          </li>
+        </ul>
+      </div>
+      <!-- TEXT NOTES -->
+      <div class="row custm-doc-row-note custm-bg-neutral shadow-sm" *ngIf="!!doc.notes?.length"> <!-- *ngIf="!!doc.notes.length" -->
+        <ul class="" dnd-sortable-container [sortableData]="doc.notes">
+          <li *ngFor="let note of doc.notes; let i = index" dnd-sortable [sortableIndex]="i" (onDropSuccess)="onDropSuccess()">
+            <div class="custm-doc-note custm-zone-note" (click)="selectedNote.isEmpty() && selectNote($event, note, i)" (clickOutside)="updateNote()" [attachOutsideOnClick]="true" style="overflow:auto">
+              <!-- LABEL -->
+              <span class="custm-zone-label"(click)="selectNoteLabel($event, note, i)"><Label [code_label]="note.code_label" style="margin:0;"></Label></span>
+              <!-- VALUE -->
+              <p style="white-space:pre-wrap;" *ngIf="selectedNote?.uuid != note.uuid">{{note.value}}</p>
+              <div class="custm-div-textarea" *ngIf="doc.title?.value!='Home' && selectedNote?.uuid == note.uuid">
+                <textarea type="textarea" [id]="note.uuid" class="custm-textarea custm-textarea-large custm-bg-medium" [(ngModel)]="selectedNote.value" aria-describedby="basic-addon1"></textarea>
+              </div>
+              <!-- DESCENDANT -->
+              <div class="custm-doc-descendant custm-zone-descendant" *ngIf="note.descendant">
+                <ul class="">
+                  <li *ngFor="let itemz of note.descendant">
+                    <a class="btn"  (click)="onDocument(itemz)"><ModelIcon [model]="itemz.index.model"></ModelIcon> {{itemz.title.value}} </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="row custm-doc-row-note custm-bg-neutral shadow-sm" >
+        <!-- TABLE -->
+        
+      </div>
+
+
+    </div>
+
+    <!-- <context-menu #labelMenu [useBootstrap4]="true">
+      <div class="list-group" *ngFor="let itemx of labels">
+        <ng-template class="list-group-item" style="color:red;" contextMenuItem [subMenu]="labelList">{{itemx.type}}</ng-template>
+        <context-menu #labelList>
+          <ng-template *ngFor="let itemy of itemx.list" contextMenuItem let-item (execute)="updateLabel(itemy.code_label)"><span>{{itemy.designation}}</span></ng-template>
+        </context-menu>
+      </div>
+    </context-menu> -->
+
+    <!-- <context-menu #basicMenu [useBootstrap4]="true">
+      <div class="dropdown ngx-contextmenu">
+        <ng-template contextMenuItem (execute)="addDocument('section-book')"><span>Add section</span></ng-template>
+        <ng-template contextMenuItem [subMenu]="NoteMenu" [enabled]="!selectedToMove && !!doc.index?.uuid"><span [class.custm-disabled]="!(!selectedToMove && !!doc.index?.uuid)">Add Note</span></ng-template>
+        <context-menu #NoteMenu>
+          <div class="list-group" *ngFor="let item of labels">
+            <ng-template contextMenuItem (execute)="createNote(item.code_label)">{{item.designation}}</ng-template>
+          </div>
+        </context-menu>
+
+        <ng-template contextMenuItem (execute)="move.emit({event:$event, idx_uuid:doc.index.uuid})" *ngIf="!selectedToMove && selectedNote.isEmpty()"><span [class.custm-disabled]="!(!selectedToMove && selectedNote.isEmpty())">Select document to move</span></ng-template>
+        <ng-template contextMenuItem (execute)="toggleCourseStatus(true, false)" *ngIf="!!doc.index?.uuid && !doc.title.course"><span [class.custm-disabled]="!(!selectedToMove && selectedNote.isEmpty())">Add in games</span></ng-template>
+        <ng-template contextMenuItem (execute)="toggleCourseStatus(true, true)" *ngIf="!!doc.index?.uuid && !doc.title.course"><span [class.custm-disabled]="!(!selectedToMove && selectedNote.isEmpty())">Add in games with dependancies</span></ng-template>
+        <ng-template contextMenuItem (execute)="toggleCourseStatus(false, false)" *ngIf="!!doc.index?.uuid && doc.title.course"><span [class.custm-disabled]="!(!selectedToMove && selectedNote.isEmpty())">Remove from games</span></ng-template>
+        <ng-template contextMenuItem (execute)="toggleCourseStatus(false, true)" *ngIf="!!doc.index?.uuid && doc.title.course"><span [class.custm-disabled]="!(!selectedToMove && selectedNote.isEmpty())">Remove from games with dependancies</span></ng-template>
+        <ng-template contextMenuItem (execute)="deleteNote()" *ngIf="!selectedNote.isEmpty()"><span [class.custm-disabled]="!(!selectedToMove && !!doc.index?.uuid)">delete note</span></ng-template>
+        <ng-template contextMenuItem (execute)="deleteDocument()" *ngIf=selectedNote.isEmpty()><span [class.custm-disabled]="!(!selectedToMove)">Delete document</span></ng-template>
+      </div>
+    </context-menu> -->
+
+  </div>
+  <!-- END NOTES -->
