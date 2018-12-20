@@ -17,7 +17,7 @@ export class ApiService {
 
   constructor( private http: HttpClient, private auth: AuthenticationService){
     if(environment.production){
-      this.domain = 'https://rudlabquickapi.herokuapp.com';
+      this.domain = 'https://ublimapi.herokuapp.com';
     }else{
       this.domain = 'http://localhost:3200';
     }

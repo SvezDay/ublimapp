@@ -11,7 +11,7 @@ export class AuthenticationService {
    private secret = 'zertyuiopghjkfsddie345678098fjsdkqurqzeljml45678';
    constructor(private http: HttpClient) {
      if(environment.production){
-       this.api = 'https://rudlabquickapi.herokuapp.com';
+       this.api = 'https://ublimapi.herokuapp.com';
      }else{
        this.api = 'http://localhost:3200';
      }

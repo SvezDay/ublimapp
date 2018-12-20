@@ -1,7 +1,7 @@
-FROM node:10.14
+FROM node:8
 
 # The qq is for silent output in the console
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev vim
+RUN apt-get update && apt-get install -y
 
 
 # Sets the path where the app is going to be installed
@@ -17,8 +17,8 @@ WORKDIR $NODE_ROOT
 COPY . .
 
 # Install all the packages
-RUN npm install -g @angular/cli
-RUN yarn install
+RUN npm install
+# RUN yarn install
 
 # The default port from ng serve (4200)
 # and 49153 for Webpack Hot Module Reload

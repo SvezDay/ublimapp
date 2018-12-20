@@ -14,7 +14,7 @@ import { Socket } from 'ng-socket-io';
 @Injectable()
 export class SocketService extends Socket {
   constructor(private auth: AuthenticationService, private socket: Socket){
-    super({ url: environment.production ? 'https://rudlabquickapi.herokuapp.com' : 'http://localhost:3200', options: {} });
+    super({ url: environment.production ? 'https://ublimapi.herokuapp.com' : 'http://localhost:3200', options: {} });
   }
   private handleError(error: any){
     console.log('error', error);
